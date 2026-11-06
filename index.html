@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>IRON FUEL 57→70 | Система питания и БАДов для Данила</title>
+  <style>
+    :root {
+      --bg-core: #08090c;
+      --bg-panel: #10131a;
+      --bg-card: #161b26;
+      --bg-input: #0b0d13;
+      --border-steel: #242b3d;
+      --border-gold: rgba(245, 158, 11, 0.45);
+      --accent-amber: #f59e0b;
+      --accent-orange: #ea580c;
+      --accent-green: #10b981;
+      --accent-blue: #3b82f6;
+      --accent-red: #f43f5e;
+      --text-white: #f8fafc;
+      --text-silver: #94a3b8;
+      --text-dim: #64748b;
+      --radius-lg: 14px;
+      --radius-md: 10px;
+      --radius-sm: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    html, body {
+      width: 100%;
+      overflow-x: hidden;
+      background-color: var(--bg-core);
+      background-image:
+        radial-gradient(circle at 12% 8%, rgba(245, 158, 11, 0.09) 0%, transparent 38%),
+        radial-gradient(circle at 88% 25%, rgba(234, 88, 12, 0.07) 0%, transparent 42%),
+        linear-gradient(180deg, #08090c 0%, #0d1017 100%);
+      color: var(--text-white);
+      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ================= МУЖСКИЕ ТАКТИЧЕСКИЕ АНИМАЦИИ ================= */
+    @keyframes slideInUp {
+      0% { opacity: 0; transform: translateY(22px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes emberPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.45); }
+      50% { box-shadow: 0 0 18px 3px rgba(245, 158, 11, 0.2); }
+    }
+
+    @keyframes scanline {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    .reveal {
+      animation: slideInUp 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    .d-1 { animation-delay: 0.06s; }
+    .d-2 { animation-delay: 0.12s; }
+    .d-3 { animation-delay: 0.18s; }
+    .d-4 { animation-delay: 0.24s; }
+    .d-5 { animation-delay: 0.30s; }
+
+    /* ================= ОСНОВНОЙ КОНТЕЙНЕР ================= */
+    .wrapper {
+      width: 100%;
+      max-width: 840px;
+      margin: 0 auto;
+      padding: 12px 12px 70px;
+    }
+
+    /* ВЕРХНЯЯ ПАНЕЛЬ */
+    .top-bar {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-steel);
+      border-radius: var(--radius-lg);
+      padding: 14px;
+      margin-bottom: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .top-bar::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent-orange), var(--accent-amber), var(--accent-orange));
+      background-size: 200% 100%;
+      animation: scanline 3.5s infinite linear;
+    }
+
+    .top-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .system-tag {
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--text-white);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .status-led {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--accent-amber);
+      animation: emberPulse 2s infinite;
+    }
+
+    .badge-tactical {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--accent-amber);
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid var(--border-gold);
+      padding: 3px 9px;
+      border-radius: 6px;
+    }
+
+    .btn-pdf {
+      width: 100%;
+      background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
+      color: #090a0f;
+      font-weight: 900;
+      font-size: 13.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      padding: 13px 16px;
+      border: none;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: transform 0.18s, filter 0.18s;
+      animation: emberPulse 3s infinite;
+    }
+
+    .btn-pdf:hover {
+      filter: brightness(1.08);
+      transform: translateY(-1px);
+    }
+
+    .btn-pdf:active {
+      transform: scale(0.98);
+    }
+
+    /* ================= БЛОК ТРЕНЕРА (HERO) ================= */
+    .hero-box {
+      background: linear-gradient(145deg, #161a25 0%, #0e1118 100%);
+      border: 1px solid var(--border-steel);
+      border-left: 4px solid var(--accent-amber);
+      border-radius: var(--radius-lg);
+      padding: 18px 15px;
+      margin-bottom: 16px;
+    }
+
+    .coach-label {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--accent-amber);
+      margin-bottom: 6px;
+    }
+
+    h1 {
+      font-size: 20px;
+      font-weight: 900;
+      line-height: 1.25;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+
+    .coach-speech {
+      font-size: 13.5px;
+      color: var(--text-silver);
+      line-height: 1.55;
+      margin-bottom: 14px;
+    }
+
+    .coach-speech strong {
+      color: #fff;
+    }
+
+    .anthro-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    @media (min-width: 560px) {
+      .anthro-grid {
+        grid-template-columns: repeat(6, 1fr);
+      }
+    }
+
+    .anthro-item {
+      background: var(--bg-core);
+      border: 1px solid var(--border-steel);
+      border-radius: var(--radius-sm);
+      padding: 8px 6px;
+      text-align: center;
+    }
+
+    .anthro-lbl {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    .anthro-val {
+      font-size: 13px;
+      font-weight: 900;
+      color: var(--accent-amber);
+      margin-top: 2px;
+    }
+
+    /* ================= СЕКЦИИ ================= */
+    .panel {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-steel);
+      border-radius: var(--radius-lg);
+      padding: 18px 14px;
+      margin-bottom: 16px;
+      transition: border-color 0.25s;
+    }
+
+    .panel:hover {
+      border-color: #35415c;
+    }
+
+    .panel-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .panel-num {
+      background: rgba(245, 158, 11, 0.14);
+      border: 1px solid var(--border-gold);
+      color: var(--accent-amber);
+      font-size: 12px;
+      font-weight: 900;
+      padding: 4px 8px;
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+
+    .panel-title {
+      font-size: 16.5px;
+      font-weight: 900;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .panel-desc {
+      font-size: 13px;
+      color: var(--text-silver);
+      margin-bottom: 14px;
+      line-height: 1.5;
+    }
+
+    /* ================= СЕКЦИЯ 1: КАЛЬКУЛЯТОР КБЖУ И ВОДЫ ================= */
+    .calc-inputs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .input-group.full {
+      grid-column: span 2;
+    }
+
+    label {
+      font-size: 10.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--text-silver);
+      letter-spacing: 0.4px;
+    }
+
+    input, select {
+      width: 100%;
+      background: var(--bg-input);
+      border: 1px solid var(--border-steel);
+      color: #fff;
+      padding: 10px 11px;
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-weight: 700;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--accent-amber);
+      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15);
+    }
+
+    .kcal-banner {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(234, 88, 12, 0.07) 100%);
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius-md);
+      padding: 16px 12px;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .kcal-caption {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--accent-amber);
+      letter-spacing: 0.6px;
+    }
+
+    .kcal-big {
+      font-size: 36px;
+      font-weight: 900;
+      color: #fff;
+      margin: 4px 0;
+    }
+
+    .kcal-sub {
+      font-size: 12px;
+      color: var(--text-silver);
+    }
+
+    .macros-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    @media (min-width: 560px) {
+      .macros-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .macro-card {
+      background: var(--bg-core);
+      border: 1px solid var(--border-steel);
+      border-radius: var(--radius-md);
+      padding: 10px 8px;
+      text-align: center;
+    }
+
+    .macro-name {
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--text-silver);
+    }
+
+    .macro-grams {
+      font-size: 19px;
+      font-weight: 900;
+      color: #fff;
+      margin: 3px 0;
+    }
+
+    .macro-cal {
+      font-size: 10.5px;
+      color: var(--text-dim);
+      margin-bottom: 6px;
+    }
+
+    .bar-bg {
+      width: 100%;
+      height: 5px;
+      background: #1e2433;
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 99px;
+      transition: width 0.45s ease;
+    }
+
+    .coach-tip {
+      background: rgba(245, 158, 11, 0.08);
+      border-left: 3px solid var(--accent-amber);
+      padding: 10px 12px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      font-size: 12.5px;
+      color: #fde68a;
+    }
+
+    /* ================= СЕКЦИЯ 2: ТАЙМИНГ ПИТАНИЯ ПОД ГРАФИК 8:00 - 17:00 ================= */
+    .mode-switch {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .mode-btn {
+      background: var(--bg-core);
+      border: 1px solid var(--border-steel);
+      color: var(--text-silver);
+      font-size: 12px;
+      font-weight: 800;
+      padding: 10px 8px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .mode-btn.active {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.22), rgba(234, 88, 12, 0.22));
+      border-color: var(--accent-amber);
+      color: #fff;
+    }
+
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .meal-slot {
+      background: var(--bg-card);
+      border: 1px solid var(--border-steel);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .meal-slot:hover {
+      border-color: var(--border-gold);
+      transform: translateX(3px);
+    }
+
+    .meal-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .meal-time {
+      font-size: 12px;
+      font-weight: 900;
+      color: var(--accent-amber);
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      padding: 3px 8px;
+      border-radius: 5px;
+    }
+
+    .meal-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .meal-kcal-badge {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--accent-green);
+      background: rgba(16, 185, 129, 0.1);
+      padding: 2px 7px;
+      border-radius: 5px;
+    }
+
+    .meal-food {
+      font-size: 12.5px;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+
+    .meal-supps {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #38bdf8;
+      background: rgba(59, 130, 246, 0.08);
+      border: 1px dashed rgba(59, 130, 246, 0.35);
+      padding: 5px 9px;
+      border-radius: 6px;
+      display: inline-block;
+    }
+
+    /* ================= СЕКЦИЯ 3: СТЕК БАДОВ, ВИТАМИНОВ И СПОРТПИТА ================= */
+    .supp-category-title {
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+      color: var(--accent-amber);
+      margin: 14px 0 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .supp-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    @media (min-width: 620px) {
+      .supp-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .supp-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-steel);
+      border-radius: var(--radius-md);
+      padding: 13px 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    .supp-card:hover {
+      border-color: var(--accent-amber);
+    }
+
+    .supp-card.checked {
+      border-color: var(--accent-green);
+      background: rgba(16, 185, 129, 0.06);
+    }
+
+    .supp-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .supp-name {
+      font-size: 14px;
+      font-weight: 900;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .check-box {
+      width: 18px;
+      height: 18px;
+      border-radius: 5px;
+      border: 2px solid #475569;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: transparent;
+      flex-shrink: 0;
+      transition: all 0.2s;
+    }
+
+    .supp-card.checked .check-box {
+      background: var(--accent-green);
+      border-color: var(--accent-green);
+      color: #041f14;
+      font-weight: 900;
+    }
+
+    .supp-dose {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--accent-amber);
+      background: rgba(245, 158, 11, 0.12);
+      padding: 3px 7px;
+      border-radius: 5px;
+      white-space: nowrap;
+    }
+
+    .supp-why {
+      font-size: 12px;
+      color: var(--text-silver);
+      margin-bottom: 6px;
+      line-height: 1.45;
+    }
+
+    .supp-when {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #e2e8f0;
+    }
+
+    .supp-when span {
+      color: var(--accent-green);
+    }
+
+    /* ================= СЕКЦИЯ 4: РЕЦЕПТ ШЕЙКА И ПРОДУКТОВАЯ МАТРИЦА ================= */
+    .shake-card {
+      background: linear-gradient(145deg, #1b1710 0%, #12151e 100%);
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+
+    .shake-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .shake-title {
+      font-size: 15px;
+      font-weight: 900;
+      color: var(--accent-amber);
+    }
+
+    .ing-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    @media (min-width: 560px) {
+      .ing-list {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .ing-item {
+      background: rgba(8, 9, 12, 0.75);
+      border: 1px solid var(--border-steel);
+      padding: 7px 9px;
+      border-radius: 6px;
+      font-size: 12px;
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .ing-item span {
+      display: block;
+      font-size: 10.5px;
+      color: var(--text-silver);
+      font-weight: 400;
+    }
+
+    .food-matrix {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    @media (min-width: 600px) {
+      .food-matrix {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .matrix-col {
+      background: var(--bg-card);
+      border: 1px solid var(--border-steel);
+      border-radius: var(--radius-md);
+      padding: 12px;
+    }
+
+    .matrix-head {
+      font-size: 13px;
+      font-weight: 900;
+      margin-bottom: 8px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .matrix-list {
+      list-style: none;
+      font-size: 12px;
+      color: #cbd5e1;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    /* ================= ПЕЧАТЬ В PDF ================= */
+    @media print {
+      body, html {
+        background: #ffffff !important;
+        color: #0f172a !important;
+      }
+      .btn-pdf, .mode-switch {
+        display: none !important;
+      }
+      .wrapper {
+        max-width: 100% !important;
+        padding: 0 !important;
+      }
+      .top-bar, .hero-box, .panel, .anthro-item, .macro-card, .meal-slot, .supp-card, .shake-card, .matrix-col {
+        background: #ffffff !important;
+        border: 1px solid #cbd5e1 !important;
+        color: #0f172a !important;
+        box-shadow: none !important;
+        animation: none !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+      h1, .panel-title, .kcal-big, .macro-grams, .meal-title, .supp-name, .shake-title {
+        color: #0f172a !important;
+      }
+      .coach-speech, .panel-desc, .meal-food, .supp-why, .matrix-list {
+        color: #334155 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wrapper">
+
+    <!-- ШАПКА -->
+    <header class="top-bar reveal">
+      <div class="top-meta">
+        <div class="system-tag">
+          <span class="status-led"></span>
+          <span>ANABOLIC FUEL & SUPPS • ДАНИЛ</span>
+        </div>
+        <span class="badge-tactical">ПРОТОКОЛ МАССЫ 57 → 70 КГ</span>
+      </div>
+      <button class="btn-pdf" onclick="window.print()">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+        </svg>
+        Скачать план питания и БАДов в PDF
+      </button>
+    </header>
+
+    <!-- ОБРАЩЕНИЕ ТРЕНЕРА К ДАНИЛУ -->
+    <section class="hero-box reveal d-1">
+      <div class="coach-label">Личное наставление от твоего тренера</div>
+      <h1>Здорово, Данил! Твоя система питания, витаминов и БАДов на массу</h1>
+      <p class="coach-speech">
+        Данил, за твои тренировки, технику и прогрессию весов в зале <strong>отвечаю лично я</strong> на наших 3 занятиях в неделю. Там мы выжмем максимум. Но запомни главное правило: в зале мы только запускаем сигнал к росту, а <strong>строишь мясо и набираешь вес ты за столом и во сне</strong>. При росте 178 см и весе 57 кг у тебя быстрый метаболизм. Чтобы пробить плато и уверенно пойти к 68–70 кг, я расписал весь твой рацион и аптечно-спортивный стек строго под твой рабочий график <strong>5/2 с 8:00 до 17:00</strong>.
+      </p>
+
+      <div class="anthro-grid">
+        <div class="anthro-item">
+          <div class="anthro-lbl">Возраст</div>
+          <div class="anthro-val">21 год</div>
+        </div>
+        <div class="anthro-item">
+          <div class="anthro-lbl">Рост</div>
+          <div class="anthro-val">178 см</div>
+        </div>
+        <div class="anthro-item">
+          <div class="anthro-lbl">Вес старт</div>
+          <div class="anthro-val">57 кг</div>
+        </div>
+        <div class="anthro-item">
+          <div class="anthro-lbl">Работа</div>
+          <div class="anthro-val">08–17 (5/2)</div>
+        </div>
+        <div class="anthro-item">
+          <div class="anthro-lbl">Тренировки</div>
+          <div class="anthro-val">3 в нед.</div>
+        </div>
+        <div class="anthro-item">
+          <div class="anthro-lbl">Цель</div>
+          <div class="anthro-val">Масса + Сила</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- СЕКЦИЯ 1: ИНТЕРАКТИВНЫЙ КАЛЬКУЛЯТОР КБЖУ И ВОДЫ -->
+    <section class="panel reveal d-2">
+      <div class="panel-head">
+        <span class="panel-num">01</span>
+        <h2 class="panel-title">Твой калькулятор калорий, БЖУ и воды</h2>
+      </div>
+      <p class="panel-desc">
+        Данил, по мере того как твой вес будет расти (57 → 60 → 65 кг), просто меняй цифру веса в поле ниже — система сама пересчитает твою новую норму калорий, граммовку БЖУ и литраж воды.
+      </p>
+
+      <div class="calc-inputs">
+        <div class="input-group">
+          <label for="weight">Твой вес сейчас (кг)</label>
+          <input type="number" id="weight" value="57" min="45" max="110" step="0.5" oninput="recalcDanil()">
+        </div>
+        <div class="input-group">
+          <label for="height">Рост (см)</label>
+          <input type="number" id="height" value="178" min="150" max="210" oninput="recalcDanil()">
+        </div>
+        <div class="input-group">
+          <label for="age">Полных лет</label>
+          <input type="number" id="age" value="21" min="16" max="60" oninput="recalcDanil()">
+        </div>
+        <div class="input-group">
+          <label for="surplus">Режим профицита</label>
+          <select id="surplus" onchange="recalcDanil()">
+            <option value="400">Уверенный набор (+400 ккал)</option>
+            <option value="500" selected>Мощный массонабор (+500 ккал)</option>
+            <option value="650">Хардгейнер-режим (+650 ккал)</option>
+          </select>
+        </div>
+        <div class="input-group full">
+          <label for="activity">Твой график активности</label>
+          <select id="activity" onchange="recalcDanil()">
+            <option value="1.42" selected>Малая активность на работе (8:00–17:00) + 3 тренировки со мной в зале</option>
+            <option value="1.52">Средняя подвижность в течение дня + 3 тренировки в зале</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="kcal-banner">
+        <div class="kcal-caption">Дневная цель Данила для роста общей и мышечной массы</div>
+        <div class="kcal-big" id="outKcal">2 748 ккал</div>
+        <div class="kcal-sub" id="outSub">Твой расход: 2 248 ккал • Чистый профицит в плюс: +500 ккал каждые сутки</div>
+      </div>
+
+      <div class="macros-grid">
+        <div class="macro-card">
+          <div class="macro-name">Белки (2.1 г/кг)</div>
+          <div class="macro-grams" id="outP">120 г</div>
+          <div class="macro-cal" id="outPKcal">480 ккал • Стройка мышц</div>
+          <div class="bar-bg">
+            <div class="bar-fill" style="width: 100%; background: var(--accent-red);"></div>
+          </div>
+        </div>
+
+        <div class="macro-card">
+          <div class="macro-name">Жиры (1.2 г/кг)</div>
+          <div class="macro-grams" id="outF">68 г</div>
+          <div class="macro-cal" id="outFKcal">612 ккал • Тестостерон</div>
+          <div class="bar-bg">
+            <div class="bar-fill" style="width: 100%; background: var(--accent-amber);"></div>
+          </div>
+        </div>
+
+        <div class="macro-card">
+          <div class="macro-name">Углеводы (База)</div>
+          <div class="macro-grams" id="outC">414 г</div>
+          <div class="macro-cal" id="outCKcal">1 656 ккал • Энергия и вес</div>
+          <div class="bar-bg">
+            <div class="bar-fill" style="width: 100%; background: var(--accent-green);"></div>
+          </div>
+        </div>
+
+        <div class="macro-card">
+          <div class="macro-name">Чистая вода</div>
+          <div class="macro-grams" id="outW">2.4 л</div>
+          <div class="macro-cal">Важно при приёме креатина!</div>
+          <div class="bar-bg">
+            <div class="bar-fill" style="width: 100%; background: var(--accent-blue);"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="coach-tip">
+        <strong>Совет от меня как тренера:</strong> Данил, при весе 57 кг тебе не нужно давиться 250 граммами куриной грудки! Твоя норма белка — <strong>115–120 г</strong> (это легко закрывается). Твой главный рычаг роста сейчас — <strong>сложные углеводы (400+ г) и полезные жиры</strong>. Именно они дадут тебе наполненность, силу на наших тренировках и стабильный прирост на весах по +1.5–2 кг в месяц.
+      </div>
+    </section>
+
+    <!-- СЕКЦИЯ 2: РАСПИСАНИЕ ПИТАНИЯ ПОД РАБОТУ 8:00 - 17:00 -->
+    <section class="panel reveal d-3">
+      <div class="panel-head">
+        <span class="panel-num">02</span>
+        <h2 class="panel-title">Тайминг еды под твой график 5/2 (с 08:00 до 17:00)</h2>
+      </div>
+      <p class="panel-desc">
+        Главная ошибка парней, работающих с 8 до 17 — пропустить перекус, вяло пообедать и прийти в зал после 17:00 пустым и голодным. Я разложил приёмы пищи по часам так, чтобы ты приходил ко мне на тренировку заряженным на 100%.
+      </p>
+
+      <div class="mode-switch">
+        <button class="mode-btn active" onclick="switchSchedule('train', this)">🔥 День тренировки (3 раза в нед.)</button>
+        <button class="mode-btn" onclick="switchSchedule('rest', this)">⚡ День восстановления (без зала)</button>
+      </div>
+
+      <!-- РАСПИСАНИЕ: ДЕНЬ ТРЕНИРОВКИ -->
+      <div class="timeline" id="schedTrain">
+        <div class="meal-slot">
+          <div class="meal-top">
+            <span class="meal-time">07:00 – 07:30 (До работы)</span>
+            <span class="meal-title">1. Загрузочный завтрак</span>
+            <span class="meal-kcal-badge">~650 ккал</span>
+          </div>
+          <div class="meal-food">
+            • <strong>Овсянка / геркулес</strong> (80–90 г в сухом виде) на молоке с мёдом и бананом + <strong>3 цельных яйца</strong> (глазунья или вареные) + тост с сыром или арахисовой пастой.
+          </div>
+          <div class="meal-supps">💊 БАДы с завтраком: Витамин D3 + K2, Омега-3 (1–2 капс.), B-комплекс</div>
+        </div>
+
+        <div class="meal-slot">
+          <div class="meal-top">
+            <span class="meal-time">10:30 – 11:00 (На работе)</span>
+            <span class="meal-title">2. Быстрый перекус без отрыва от работы</span>
+            <span class="meal-kcal-badge">~450 ккал</span>
+          </div>
+          <div class="meal-food">
+            • Выпить заранее взбитый в шейкере <strong>протеин/гейнер на молоке</strong> + горсть грецких орехов или миндаля (35 г) + 1 банан или булочка/хлебцы. Занимает ровно 2 минуты!
+          </div>
+        </div>
+
+        <div class="meal-slot">
+          <div class="meal-top">
+            <span class="meal-time">13:00 – 14:00 (Обед на работе)</span>
+            <span class="meal-title">3. Основной рабочий обед</span>
+            <span class="meal-kcal-badge">~700 ккал</span>
+          </div>
+          <div class="meal-food">
+            • <strong>Рис, гречка или макароны из твёрдых сортов</strong> (100–120 г в сухом виде / ~300 г готовых) + <strong>куриное бедро, индейка или говядина</strong> (150 г) + овощи с 1 ст. ложкой оливкового масла.
+          </div>
+          <div class="meal-supps">💊 С обедом: Омега-3 (1 капс.) + Ферменты (если плотный приём)</div>
+        </div>
+
+        <div class="meal-slot" style="border-color: var(--accent-amber);">
+          <div class="meal-top">
+            <span class="meal-time">16:15 – 16:30 (За 30 мин до конца смены)</span>
+            <span class="meal-title">4. Предтренировочный заряд (КЛЮЧЕВОЙ ПРИЁМ!)</span>
+            <span class="meal-kcal-badge">~350 ккал</span>
+          </div>
+          <div class="meal-food">
+            • <strong>Данил, никогда не иди ко мне в зал в 17:30 на пустой желудок после обеда в 13:00!</strong> За 40 минут до выхода с работы съешь 2 банана + порцию сывороточного протеина (или сладкий творожный сырок / злаковый батончик + хлебцы).
+          </div>
+          <div class="meal-supps">⚡ Добавки: 5 г Креатина моногидрата (или сразу после зала)</div>
+        </div>
+
+        <div class="meal-slot">
+          <div class="meal-top">
+            <span class="meal-time">20:00 – 20:30 (После нашей тренировки)</span>
+            <span class="meal-title">5. Анаболический ужин восстановления</span>
+            <span class="meal-kcal-badge">~600 ккал</span>
+          </div>
+          <div class="meal-food">
+            • <strong>Картофель (пюре/запеченный) или белый рис</strong> (порция 250–300 г) + <strong>рыба, курица или телятина</strong> (150 г) + легкий салат. После зала углеводы летят прямиком в мышцы, а не в жир!
+          </div>
+          <div class="meal-supps">💊 С ужином: Цинк (15–25 мг)</div>
+        </div>
+
+        <div class="meal-slot">
+          <div class="meal-top">
+            <span class="meal-time">22:15 – 22:30 (Перед сном)</span>
+            <span class="meal-title">6. Ночная подпитка мышц</span>
+            <span class="meal-kcal-badge">~200 ккал</span>
+          </div>
+          <div class="meal-food">
+            • Пачка мягкого творога 5% (150 г) с ягодами/сметаной или стакан кефира/ряженки.
+          </div>
+          <div class="meal-supps">🌙 За 30 мин до сна: Магний цитрат/бисглицинат (400 мг) для глубокого сна и ЦНС</div>
+        </div>
+      </div>
+
+      <!-- РАСПИСАНИЕ: ДЕНЬ ОТДЫХА -->
+      <div class="timeline" id="schedRest" style="display: none;">
+        <div class="meal-slot">
+          <div class="meal-top">
+            <span class="meal-time">07:00 – 07:30</span>
+            <span class="meal-title">1. Плотный завтрак + Креатин</span>
+            <span class="meal-kcal-badge">~650 ккал</span>
+          </div>
+          <div class="meal-food">
+            • В дни без зала твои мышцы как раз <strong>растут и залечивают микротравмы</strong> после наших тренировок, поэтому калорийность НЕ снижаем! Каша + 3 яйца + тосты с сыром.
+          </div>
+          <div class="meal-supps">💊 Утром: 5 г Креатина с соком + Витамин D3 + Омега-3</div>
+        </div>
+
+        <div class="meal-slot">
+          <div class="meal-top">
+            <span class="meal-time">11:00 (Перекус на работе)</span>
+            <span class="meal-title">2. Калорийный шейк + орехи</span>
+            <span class="meal-kcal-badge">~500 ккал</span>
+          </div>
+          <div class="meal-food">
+            • Домашний белково-углеводный коктейль + горсть орехов или сухофруктов.
+          </div>
+        </div>
+
+        <div class="meal-slot">
+          <div class="meal-top">
+            <span class="meal-time">13:30 (Обед) и 16:30 (Полдник)</span>
+            <span class="meal-title">3–4. Стабильная загрузка на работе</span>
+            <span class="meal-kcal-badge">~950 ккал</span>
+          </div>
+          <div class="meal-food">
+            • В 13:30 полноценный обед (крупа + мясо). В 16:30 перед выходом с работы — творог с бананом или сэндвич с курицей/сыром, чтобы приехать домой без зверского голода.
+          </div>
+        </div>
+
+        <div class="meal-slot">
+          <div class="meal-top">
+            <span class="meal-time">19:30 (Ужин дома) + 22:30 (Перед сном)</span>
+            <span class="meal-title">5. Спокойный вечерний приём и сон</span>
+            <span class="meal-kcal-badge">~650 ккал</span>
+          </div>
+          <div class="meal-food">
+            • Полноценный ужин с мясом/рыбой и гарниром + вечерний стек минералов (Цинк и Магний) для перезагрузки нервной системы.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- СЕКЦИЯ 3: ПОЛНЫЙ СТЕК БАДОВ, ВИТАМИНОВ И СПОРТПИТА -->
+    <section class="panel reveal d-4">
+      <div class="panel-head">
+        <span class="panel-num">03</span>
+        <h2 class="panel-title">Твой стек: Спортпит, БАДы и Витамины</h2>
+      </div>
+      <p class="panel-desc">
+        Никаких пустых трат на бесполезные банки (BCAA и жиросжигатели тебе не нужны). Здесь собрана только рабочая, доказанная база для парня в 21 год на набор массы. Нажимай на карточки, чтобы отмечать то, что уже купил или выпил сегодня.
+      </p>
+
+      <div class="supp-category-title">🔥 1. Спортивное питание (База для роста веса и силы)</div>
+      <div class="supp-grid">
+        <div class="supp-card" onclick="this.classList.toggle('checked')">
+          <div class="supp-head">
+            <div class="supp-name"><span class="check-box">✓</span> Креатин Моногидрат</div>
+            <span class="supp-dose">5 г / день</span>
+          </div>
+          <div class="supp-why">
+            Добавка №1 для тебя, Данил. Наполняет мышцы водой и АТФ, дает +2–3 кг плотного объема уже в первый месяц и прибавляет силовые в базовых жимах и тягах со мной в зале.
+          </div>
+          <div class="supp-when"><span>Как пить:</span> Каждый день по 5 г (1 чайная ложка без горки) без фазы загрузки, запивая сладким соком или с протеином после еды.</div>
+        </div>
+
+        <div class="supp-card" onclick="this.classList.toggle('checked')">
+          <div class="supp-head">
+            <div class="supp-name"><span class="check-box">✓</span> Сывороточный протеин (Whey)</div>
+            <span class="supp-dose">1–2 порции</span>
+          </div>
+          <div class="supp-why">
+            Твоя страховка на работе с 8:00 до 17:00. Когда нет времени есть курицу с гречкой из контейнера, порция протеина с бананом и молоком закрывает приём пищи за 60 секунд.
+          </div>
+          <div class="supp-when"><span>Как пить:</span> 1 черпак (30 г) на перекус в 11:00 или в 16:15 перед выходом с работы ко мне на тренировку.</div>
+        </div>
+      </div>
+
+      <div class="supp-category-title">🛡️ 2. Витамины, минералы и гормональный фон (Аптека / БАДы)</div>
+      <div class="supp-grid">
+        <div class="supp-card" onclick="this.classList.toggle('checked')">
+          <div class="supp-head">
+            <div class="supp-name"><span class="check-box">✓</span> Витамин D3 + K2</div>
+            <span class="supp-dose">2000–5000 МЕ</span>
+          </div>
+          <div class="supp-why">
+            Так как ты с 8:00 до 17:00 находишься в помещении на работе, дефицит D3 гарантирован. Он напрямую отвечает за уровень твоего тестостерона, крепость костей и иммунитет.
+          </div>
+          <div class="supp-when"><span>Как пить:</span> Строго утром за завтраком вместе с жирной пищей (яйца/масло).</div>
+        </div>
+
+        <div class="supp-card" onclick="this.classList.toggle('checked')">
+          <div class="supp-head">
+            <div class="supp-name"><span class="check-box">✓</span> Омега-3 (Высокий EPA/DHA)</div>
+            <span class="supp-dose">1000–2000 мг</span>
+          </div>
+          <div class="supp-why">
+            Смазка для твоих суставов и связок под растущие рабочие веса в зале, поддержка сердца и улучшение чувствительности клеток к инсулину (еда лучше идет в мышцы).
+          </div>
+          <div class="supp-when"><span>Как пить:</span> По 1 капсуле за завтраком и обедом (смотри сумму EPA+DHA на обороте банки не менее 1000 мг).</div>
+        </div>
+
+        <div class="supp-card" onclick="this.classList.toggle('checked')">
+          <div class="supp-head">
+            <div class="supp-name"><span class="check-box">✓</span> Магний (Цитрат / Бисглицинат)</div>
+            <span class="supp-dose">400 мг</span>
+          </div>
+          <div class="supp-why">
+            Пятидневка с 8 утра + 3 тяжелые тренировки со мной — это нагрузка на ЦНС. Магний убирает мышечные зажимы, спазмы и делает сон глубоким.
+          </div>
+          <div class="supp-when"><span>Как пить:</span> За 30–40 минут до сна, запивая стаканом воды.</div>
+        </div>
+
+        <div class="supp-card" onclick="this.classList.toggle('checked')">
+          <div class="supp-head">
+            <div class="supp-name"><span class="check-box">✓</span> Цинк (Пиколинат) + B-комплекс</div>
+            <span class="supp-dose">15–25 мг</span>
+          </div>
+          <div class="supp-why">
+            Цинк вместе с витаминами группы B разгоняет синтез мышечного белка, повышает аппетит (что критично при весе 57 кг!) и держит мужской гормональный фон на пике.
+          </div>
+          <div class="supp-when"><span>Как пить:</span> B-комплекс — утром, Цинк — после плотного ужина (не пей цинк натощак!).</div>
+        </div>
+      </div>
+
+      <div class="supp-category-title">⚙️ 3. Помощь ЖКТ на профиците калорий</div>
+      <div class="supp-grid">
+        <div class="supp-card" onclick="this.classList.toggle('checked')" style="grid-column: 1 / -1;">
+          <div class="supp-head">
+            <div class="supp-name"><span class="check-box">✓</span> Пищеварительные ферменты (Панкреатин / Мезим / Энзимы)</div>
+            <span class="supp-dose">По необходимости</span>
+          </div>
+          <div class="supp-why">
+            Данил, когда начинаешь есть на 2 750+ ккал при весе 57 кг, желудок с непривычки может ощущать тяжесть. Если съел большой обед или ужин и чувствуешь переполненность — закинь 1 таблетку ферментов во время еды, чтобы всё усвоилось на 100%.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- СЕКЦИЯ 4: РЕЦЕПТ ДОМАШНЕГО ГЕЙНЕРА И ПРОДУКТОВАЯ КОРЗИНА -->
+    <section class="panel reveal d-5">
+      <div class="panel-head">
+        <span class="panel-num">04</span>
+        <h2 class="panel-title">Секретное оружие эктоморфа + Продуктовая корзина</h2>
+      </div>
+      <p class="panel-desc">
+        Когда трудно прожевать лишнюю тарелку гречки, калории нужно <strong>пить</strong>. Взбивай этот коктейль дома за 2 минуты и бери в термобутылке/шейкере на работу.
+      </p>
+
+      <div class="shake-card">
+        <div class="shake-head">
+          <div class="shake-title">🥤 Фирменный коктейль «Масса 900 ккал» (Домашний гейнер без химии)</div>
+          <span class="meal-kcal-badge">910 ккал • Б: 48г | Ж: 28г | У: 115г</span>
+        </div>
+        <div class="ing-list">
+          <div class="ing-item">Молоко 2.5–3.2% <span>350 мл (основа)</span></div>
+          <div class="ing-item">Сывороточный протеин <span>1 черпак (30 г)</span></div>
+          <div class="ing-item">Овсяные хлопья <span>60 г (перемолоть в муку)</span></div>
+          <div class="ing-item">Спелый банан <span>1 крупный (120 г)</span></div>
+          <div class="ing-item">Арахисовая паста <span>1 ст. ложка с горкой (30 г)</span></div>
+          <div class="ing-item">Ложка мёда <span>15 г (для вкуса и энергии)</span></div>
+        </div>
+        <p style="font-size: 12px; color: var(--text-silver);">
+          <strong>Как это работает:</strong> Выпивается за 1.5 минуты на работе в 11:00 утра, не перегружает желудок и сразу закрывает треть твоей дневной нормы калорий!
+        </p>
+      </div>
+
+      <div class="food-matrix">
+        <div class="matrix-col">
+          <div class="matrix-head" style="color: var(--accent-green);">🍚 Топ Углеводов (База веса)</div>
+          <ul class="matrix-list">
+            <li>• Белый рис (жасмин/басмати) — легче всего усваивается в больших объемах</li>
+            <li>• Макароны твердых сортов</li>
+            <li>• Гречка и овсяные хлопья</li>
+            <li>• Картофель (запеченный / пюре)</li>
+            <li>• Бананы, финики, мёд, хлебцы</li>
+          </ul>
+        </div>
+
+        <div class="matrix-col">
+          <div class="matrix-head" style="color: var(--accent-red);">🥩 Топ Белков (Стройматериал)</div>
+          <ul class="matrix-list">
+            <li>• Куриное бедро и филе индейки (бедро сочнее и калорийнее грудки!)</li>
+            <li>• Говядина (источник гемового железа и своего креатина)</li>
+            <li>• Яйца куриные целиком (желток не выкидывай!)</li>
+            <li>• Творог 5%, сыр, рыба (горбуша, треска, форель)</li>
+          </ul>
+        </div>
+
+        <div class="matrix-col">
+          <div class="matrix-head" style="color: var(--accent-amber);">🥑 Топ Жиров (Лёгкие калории)</div>
+          <ul class="matrix-list">
+            <li>• Оливковое и нерафинированное подсолнечное масло (добавляй прямо в готовый рис/гречку!)</li>
+            <li>• Арахисовая паста без сахара</li>
+            <li>• Грецкие орехи, миндаль, кешью</li>
+            <li>• Сливочное масло 82.5% (10–15 г в утреннюю кашу)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    function recalcDanil() {
+      const w = parseFloat(document.getElementById('weight').value) || 57;
+      const h = parseFloat(document.getElementById('height').value) || 178;
+      const a = parseFloat(document.getElementById('age').value) || 21;
+      const sur = parseFloat(document.getElementById('surplus').value) || 500;
+      const act = parseFloat(document.getElementById('activity').value) || 1.42;
+
+      // Формула Миффлина-Сан Жеора
+      const bmr = (10 * w) + (6.25 * h) - (5 * a) + 5;
+      const tdee = Math.round(bmr * act);
+      const targetKcal = tdee + sur;
+
+      // БЖУ на массу для худощавого телосложения:
+      // Белок: 2.1 г/кг
+      const pG = Math.round(w * 2.1);
+      const pKcal = pG * 4;
+
+      // Жиры: 1.2 г/кг
+      const fG = Math.round(w * 1.2);
+      const fKcal = fG * 9;
+
+      // Углеводы: остаток калорий
+      const cKcal = Math.max(600, targetKcal - pKcal - fKcal);
+      const cG = Math.round(cKcal / 4);
+
+      // Вода: 38 мл на кг + 0.25 л под креатин
+      const waterL = ((w * 0.038) + 0.25).toFixed(1);
+
+      document.getElementById('outKcal').textContent = targetKcal.toLocaleString('ru-RU') + ' ккал';
+      document.getElementById('outSub').textContent =
+        `Твой расход: ${tdee.toLocaleString('ru-RU')} ккал • Чистый профицит в плюс: +${sur} ккал каждые сутки`;
+
+      document.getElementById('outP').textContent = pG + ' г';
+      document.getElementById('outPKcal').textContent = `${pKcal} ккал • Стройка мышц`;
+
+      document.getElementById('outF').textContent = fG + ' г';
+      document.getElementById('outFKcal').textContent = `${fKcal} ккал • Тестостерон`;
+
+      document.getElementById('outC').textContent = cG + ' г';
+      document.getElementById('outCKcal').textContent = `${cG * 4} ккал • Энергия и вес`;
+
+      document.getElementById('outW').textContent = waterL + ' л';
+    }
+
+    function switchSchedule(mode, btn) {
+      document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      document.getElementById('schedTrain').style.display = (mode === 'train') ? 'flex' : 'none';
+      document.getElementById('schedRest').style.display = (mode === 'rest') ? 'flex' : 'none';
+    }
+
+    window.addEventListener('DOMContentLoaded', recalcDanil);
+  </script>
+</body>
+</html>
